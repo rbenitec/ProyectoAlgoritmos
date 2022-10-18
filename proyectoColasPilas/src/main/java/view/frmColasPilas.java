@@ -2,25 +2,54 @@
 package view;
 
 import controller.Cola;
+import controller.PilaLista;
 import javax.swing.table.DefaultTableModel;
+import modell.Nodo;
 import modell.Producto;
 
 
 public class frmColasPilas extends javax.swing.JFrame {
 
     Cola cola = new Cola(20);
+    PilaLista pl = new PilaLista();
     int pos;
 
     public frmColasPilas() {
         initComponents();
         inicio();
         llenarCombo();
+        llenarComboPila();
     }
+    
+    
+    void muestraTablaPilal(){
+        DefaultTableModel df1 = (DefaultTableModel) tblPila.getModel();
+        df1.setRowCount(0);
+//        int i=0;
+        Nodo p = pl.getTope();
+        
+        while(p!=null){
+//            cadena += p.getNombre()+"\t";
+            Object v[] = {p.getProducto().getCodigo(), p.getProducto().getNombre(), p.getProducto().getMarca(), p.getProducto().getFechaVencimiento(), p.getProducto().getCantidad(), p.getProducto().getPrecio()};
+            df1.addRow(v);
+            p=p.getSgteNodo();
+        }
+        
+        
+    }
+    
     
     void llenarCombo(){
         cbxCantidadCola.addItem("Seleccione");
         for(int j=1; j<=100; j++){
             cbxCantidadCola.addItem(j+"");
+        }
+    }
+    
+    void llenarComboPila(){
+        cbxCantidadPila.addItem("Seleccione");
+        for(int j=1; j<=100; j++){
+            cbxCantidadPila.addItem(j+"");
         }
     }
     
@@ -34,23 +63,20 @@ public class frmColasPilas extends javax.swing.JFrame {
         }
     }
     
+    
     void inicio(){
         txtNombreCola.setEnabled(false);txtNombrePila.setEnabled(false);
         txtFechaCola.setEnabled(false);txtFechaPila.setEnabled(false);
         txtMarcaCola.setEnabled(false);txtMarcaPila.setEnabled(false);
         txtPrecioCola.setEnabled(false);txtPrecioPila.setEnabled(false);
         cbxCantidadCola.setEnabled(false);cbxCantidadPila.setEnabled(false);
-        btnInsertarCola.setEnabled(false);btnModificarCola.setEnabled(false);
-        btnEliminarCola.setEnabled(false);
+        btnInsertarCola.setEnabled(false);btnInsertarPila.setEnabled(false);
+        btnEliminarCola.setEnabled(false);btnEliminarPila.setEnabled(false);
     }
     
-    void eliminaCola(String tipo){
-        if(tipo.equalsIgnoreCase("arreglo")){
-            cola.eliminarElemento();
-        }else{
-            //Elimina elemento en la listaEnlazada
-        }
+    void eliminaCola(){
         
+        cola.eliminarElemento();
         muestraTablaCola();
         inicio();
     }
@@ -63,7 +89,16 @@ public class frmColasPilas extends javax.swing.JFrame {
         txtPrecioCola.setEnabled(true);
         cbxCantidadCola.setEnabled(true);
         btnEliminarCola.setEnabled(false);
-        btnModificarCola.setEnabled(false);
+    }
+    
+    void nuevoPila(){
+        btnInsertarPila.setEnabled(true);
+        txtNombrePila.setEnabled(true);
+        txtFechaPila.setEnabled(true);
+        txtMarcaPila.setEnabled(true);
+        txtPrecioPila.setEnabled(true);
+        cbxCantidadPila.setEnabled(true);
+        btnEliminarPila.setEnabled(false);
     }
     
     void limpiarCampos(){
@@ -90,14 +125,11 @@ public class frmColasPilas extends javax.swing.JFrame {
         tblPila = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         btnInsertarPila = new javax.swing.JButton();
-        cbxTipoPila = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         btnNuevoPila = new javax.swing.JButton();
         btnCancelarPila = new javax.swing.JButton();
         btnEliminarPila = new javax.swing.JButton();
-        btnModificarPila = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         txtCodigoPila = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
@@ -126,14 +158,11 @@ public class frmColasPilas extends javax.swing.JFrame {
         cbxCantidadCola = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         btnInsertarCola = new javax.swing.JButton();
-        cbxTipoCola = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         btnNuevoCola = new javax.swing.JButton();
         btnCancelarCola = new javax.swing.JButton();
         btnEliminarCola = new javax.swing.JButton();
-        btnModificarCola = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblCola = new javax.swing.JTable();
@@ -143,6 +172,11 @@ public class frmColasPilas extends javax.swing.JFrame {
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "INDICE"));
 
         jButton2.setText("Cola con Prioridad");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Cola Circular");
 
@@ -204,7 +238,7 @@ public class frmColasPilas extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(190, Short.MAX_VALUE)
+                .addContainerGap(242, Short.MAX_VALUE)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(167, 167, 167))
         );
@@ -213,7 +247,7 @@ public class frmColasPilas extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Inicio", jPanel1);
@@ -229,6 +263,11 @@ public class frmColasPilas extends javax.swing.JFrame {
                 "Codigo", "Nombre", "Marca", "Fecha", "Cantidad", "Precio"
             }
         ));
+        tblPila.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblPilaMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblPila);
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Panel Register"));
@@ -240,9 +279,7 @@ public class frmColasPilas extends javax.swing.JFrame {
             }
         });
 
-        cbxTipoPila.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Arreglo", "ListaEnlazada" }));
-
-        jLabel15.setText("Insertar a:");
+        jLabel15.setText("Insertar en una Cola:");
 
         jLabel16.setText("Nuevo:");
 
@@ -267,10 +304,6 @@ public class frmColasPilas extends javax.swing.JFrame {
             }
         });
 
-        btnModificarPila.setText("Modificar");
-
-        jButton5.setText("Listar");
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -282,9 +315,6 @@ public class frmColasPilas extends javax.swing.JFrame {
                     .addComponent(jLabel16))
                 .addGap(33, 33, 33)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(cbxTipoPila, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addComponent(btnNuevoPila)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
@@ -293,9 +323,7 @@ public class frmColasPilas extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnEliminarPila, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
-                            .addComponent(btnModificarPila, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
-                            .addComponent(btnInsertarPila, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnInsertarPila, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel5Layout.setVerticalGroup(
@@ -307,18 +335,12 @@ public class frmColasPilas extends javax.swing.JFrame {
                     .addComponent(btnNuevoPila)
                     .addComponent(btnCancelarPila))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
-                    .addComponent(cbxTipoPila, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel15)
                 .addGap(18, 18, 18)
                 .addComponent(btnInsertarPila)
                 .addGap(18, 18, 18)
-                .addComponent(btnModificarPila)
-                .addGap(18, 18, 18)
                 .addComponent(btnEliminarPila)
-                .addGap(18, 18, 18)
-                .addComponent(jButton5)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         jLabel17.setText("Codigo:");
@@ -341,6 +363,12 @@ public class frmColasPilas extends javax.swing.JFrame {
 
         jLabel22.setText("Cantidad:");
 
+        cbxCantidadPila.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxCantidadPilaActionPerformed(evt);
+            }
+        });
+
         jLabel10.setText("Resultados:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -352,7 +380,7 @@ public class frmColasPilas extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 928, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(17, Short.MAX_VALUE))
+                        .addContainerGap(68, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
@@ -374,9 +402,9 @@ public class frmColasPilas extends javax.swing.JFrame {
                                         .addComponent(cbxCantidadPila, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(txtCodigoPila, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtNombrePila, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtPrecioPila, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtPrecioPila, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(30, 30, 30))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -410,12 +438,10 @@ public class frmColasPilas extends javax.swing.JFrame {
                                 .addComponent(jLabel22))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(cbxCantidadPila, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                        .addComponent(jLabel10))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(cbxCantidadPila, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
@@ -452,9 +478,7 @@ public class frmColasPilas extends javax.swing.JFrame {
             }
         });
 
-        cbxTipoCola.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Arreglo", "ListaEnlazada" }));
-
-        jLabel8.setText("Insertar a:");
+        jLabel8.setText("Insertar en un arreglo:");
 
         jLabel7.setText("Nuevo:");
 
@@ -479,10 +503,6 @@ public class frmColasPilas extends javax.swing.JFrame {
             }
         });
 
-        btnModificarCola.setText("Modificar");
-
-        jButton1.setText("Listar");
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -493,21 +513,14 @@ public class frmColasPilas extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(jLabel7))
                 .addGap(33, 33, 33)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnEliminarCola, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnInsertarCola, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(cbxTipoCola, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnEliminarCola, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnModificarCola, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnInsertarCola, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(btnNuevoCola, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                                .addGap(60, 60, 60)
-                                .addComponent(btnCancelarCola)))
-                        .addGap(49, 49, 49))))
+                        .addComponent(btnNuevoCola, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(60, 60, 60)
+                        .addComponent(btnCancelarCola)))
+                .addGap(49, 49, 49))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -518,18 +531,12 @@ public class frmColasPilas extends javax.swing.JFrame {
                     .addComponent(btnNuevoCola)
                     .addComponent(btnCancelarCola))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(cbxTipoCola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addComponent(jLabel8)
+                .addGap(34, 34, 34)
                 .addComponent(btnInsertarCola)
                 .addGap(18, 18, 18)
-                .addComponent(btnModificarCola)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEliminarCola)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         jLabel9.setText("Resultados:");
@@ -585,7 +592,7 @@ public class frmColasPilas extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 941, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 7, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -618,11 +625,9 @@ public class frmColasPilas extends javax.swing.JFrame {
                                 .addComponent(jLabel6))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(cbxCantidadCola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                .addComponent(cbxCantidadCola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -657,25 +662,26 @@ public class frmColasPilas extends javax.swing.JFrame {
     }//GEN-LAST:event_txtFechaPilaActionPerformed
 
     private void btnNuevoPilaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoPilaActionPerformed
-        nuevo();
+        nuevoPila();
     }//GEN-LAST:event_btnNuevoPilaActionPerformed
 
     private void btnInsertarPilaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarPilaActionPerformed
-        String nombre = txtNombreCola.getText();
-        String marca = txtMarcaCola.getText();
-        String fecha = txtFechaCola.getText();
-        int cant = (int) cbxCantidadCola.getSelectedItem();
-        double precio = Double.parseDouble(txtPrecioCola.getText());
+        String nombre = txtNombrePila.getText();
+        String marca = txtMarcaPila.getText();
+        String fecha = txtFechaPila.getText();
+        int cant = Integer.parseInt(cbxCantidadPila.getSelectedItem().toString()) ;
+        double precio = Double.parseDouble(txtPrecioPila.getText());
         
         Producto p = new Producto(nombre, marca, precio, cant, fecha);
-        cola.insertarProducto(p);
-        muestraTablaCola();
+        pl.insertaElemento(p);
+        muestraTablaPilal();
         inicio();
     }//GEN-LAST:event_btnInsertarPilaActionPerformed
 
     private void btnEliminarPilaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPilaActionPerformed
-        String tipo = cbxTipoCola.getSelectedItem().toString();
-        eliminaCola(tipo);
+        pl.eliminaElemento();
+        muestraTablaPilal();
+        inicio();
     }//GEN-LAST:event_btnEliminarPilaActionPerformed
 
     private void btnNuevoColaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoColaActionPerformed
@@ -713,13 +719,39 @@ public class frmColasPilas extends javax.swing.JFrame {
         cbxCantidadCola.setSelectedItem(tblCola.getValueAt(pos, 4).toString());
         txtFechaCola.setText(tblCola.getValueAt(pos, 3).toString());
 
-        inicio();btnEliminarCola.setEnabled(true);btnModificarCola.setEnabled(true);
+        inicio();btnEliminarCola.setEnabled(true);
     }//GEN-LAST:event_tblColaMouseClicked
 
     private void btnEliminarColaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarColaActionPerformed
-        String tipo = cbxTipoCola.getSelectedItem().toString();
-        eliminaCola(tipo);
+
+        eliminaCola();
     }//GEN-LAST:event_btnEliminarColaActionPerformed
+
+    private void cbxCantidadPilaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCantidadPilaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxCantidadPilaActionPerformed
+
+    private void tblPilaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPilaMouseClicked
+        pos = tblPila.getSelectedRow();
+        txtCodigoPila.setText(tblPila.getValueAt(pos, 0).toString());
+        txtNombrePila.setText(tblPila.getValueAt(pos, 1).toString());
+        txtMarcaPila.setText(tblPila.getValueAt(pos, 2).toString());
+        txtPrecioPila.setText(tblPila.getValueAt(pos, 5).toString());
+        cbxCantidadPila.setSelectedItem(tblPila.getValueAt(pos, 4).toString());
+        txtFechaPila.setText(tblPila.getValueAt(pos, 3).toString());
+
+        inicio();btnEliminarPila.setEnabled(true);
+    }//GEN-LAST:event_tblPilaMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        //creamos variable abrir
+        frmColaPrioridad ver=new frmColaPrioridad();
+        //metodo para ver la ventana Conf.Destino
+        ver.setVisible(true);
+        //ocultar ventana actual
+        this.setVisible(false);
+
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -764,19 +796,13 @@ public class frmColasPilas extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminarPila;
     private javax.swing.JButton btnInsertarCola;
     private javax.swing.JButton btnInsertarPila;
-    private javax.swing.JButton btnModificarCola;
-    private javax.swing.JButton btnModificarPila;
     private javax.swing.JButton btnNuevoCola;
     private javax.swing.JButton btnNuevoPila;
     private javax.swing.JComboBox<String> cbxCantidadCola;
     private javax.swing.JComboBox<String> cbxCantidadPila;
-    private javax.swing.JComboBox<String> cbxTipoCola;
-    private javax.swing.JComboBox<String> cbxTipoPila;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

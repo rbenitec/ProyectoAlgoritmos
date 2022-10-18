@@ -67,7 +67,6 @@ public class frmColaPrioridad extends javax.swing.JFrame {
         txtPrecio.setEnabled(true);
         cbxCantidad.setEnabled(true);
         btnEliminar.setEnabled(false);
-        btnModificar.setEnabled(false);
         rbtNormal.setEnabled(true);rbtPrioridad.setEnabled(true);
         
     }
@@ -107,7 +106,6 @@ public class frmColaPrioridad extends javax.swing.JFrame {
         btnNuevo = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        btnModificar = new javax.swing.JButton();
         btnInsertar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         rbtNormal = new javax.swing.JRadioButton();
@@ -119,6 +117,7 @@ public class frmColaPrioridad extends javax.swing.JFrame {
         tblNormal = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -161,8 +160,6 @@ public class frmColaPrioridad extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
-
-        btnModificar.setText("Modificar");
 
         btnInsertar.setText("Insertar");
         btnInsertar.addActionListener(new java.awt.event.ActionListener() {
@@ -218,8 +215,7 @@ public class frmColaPrioridad extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnInsertar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))
                 .addGap(40, 40, 40))
         );
         jPanel5Layout.setVerticalGroup(
@@ -234,10 +230,9 @@ public class frmColaPrioridad extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnInsertar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnModificar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEliminar))
+                        .addGap(29, 29, 29)
+                        .addComponent(btnEliminar)
+                        .addGap(14, 14, 14))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -349,6 +344,13 @@ public class frmColaPrioridad extends javax.swing.JFrame {
 
         jLabel9.setText("Cola con Prioridad:");
 
+        jButton1.setText("Return");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -358,9 +360,6 @@ public class frmColaPrioridad extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(353, 353, 353)
-                        .addComponent(jLabel7))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 941, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -374,13 +373,21 @@ public class frmColaPrioridad extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel9)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(353, 353, 353)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel7)
-                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(jButton1))
+                .addGap(7, 7, 7)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
@@ -430,7 +437,7 @@ public class frmColaPrioridad extends javax.swing.JFrame {
         cbxCantidad.setSelectedItem(tblNormal.getValueAt(pos, 4).toString());
         txtFecha.setText(tblNormal.getValueAt(pos, 3).toString());
 
-        inicio();btnEliminar.setEnabled(true);btnModificar.setEnabled(true);rbtNormal.setEnabled(false);rbtPrioridad.setEnabled(false);
+        inicio();btnEliminar.setEnabled(true);rbtNormal.setEnabled(false);rbtPrioridad.setEnabled(false);
     }//GEN-LAST:event_tblNormalMouseClicked
 
     private void tblPrioridadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPrioridadMouseClicked
@@ -442,7 +449,7 @@ public class frmColaPrioridad extends javax.swing.JFrame {
         cbxCantidad.setSelectedItem(tblPrioridad.getValueAt(pos, 4).toString());
         txtFecha.setText(tblPrioridad.getValueAt(pos, 3).toString());
 
-        inicio();btnEliminar.setEnabled(true);btnModificar.setEnabled(true);rbtNormal.setEnabled(false);rbtPrioridad.setEnabled(false);
+        inicio();btnEliminar.setEnabled(true);rbtNormal.setEnabled(false);rbtPrioridad.setEnabled(false);
     }//GEN-LAST:event_tblPrioridadMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -453,6 +460,16 @@ public class frmColaPrioridad extends javax.swing.JFrame {
             cp.eliminarElementoPrioridad();muestraTablaNormal();
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //creamos variable abrir
+                frmColasPilas ver=new frmColasPilas();
+        //metodo para ver la ventana Conf.Destino
+        ver.setVisible(true);
+        //ocultar ventana actual
+        this.setVisible(false);
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -493,10 +510,10 @@ public class frmColaPrioridad extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnInsertar;
-    private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbxCantidad;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
