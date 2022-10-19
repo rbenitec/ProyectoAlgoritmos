@@ -1,8 +1,6 @@
 
 package modell;
 
-import java.util.logging.Logger;
-
 public class Producto {
     
     private int codigo;
@@ -16,6 +14,11 @@ public class Producto {
     /*
     *   Constructor de la clase producto
     */
+    
+    public Producto(){
+        
+    }
+            
     
     public Producto(String nombre, String marca, double precio, int cantidad, String fechaVencimiento){
        

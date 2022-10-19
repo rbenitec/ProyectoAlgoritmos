@@ -11,7 +11,7 @@ public class mainTests {
         
         PilaLista l = new PilaLista();
         Producto p1 = new Producto("Yogurt", "Gloria", 6.20, 10, "2022-12-12");
-        l.insertaElemento(p1);
+        
         Producto p2 = new Producto("Fideos", "Moly", 2.20, 20, "2022-11-12");
         l.insertaElemento(p2);
         Producto p3 = new Producto("Atun", "Primor", 7.20, 16, "2024-10-12");

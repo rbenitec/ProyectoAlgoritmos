@@ -26,7 +26,7 @@ public class ColaPrioridad {
     
     public void insertarElementoNormal(Producto p){
         int indiceMax = normal.length-1;
-        if(ultimoNormal<indiceMax){
+        if(ultimoNormal<indiceMax){ // Que la cola tiene espacio ?
             ultimoNormal++;
             normal[ultimoNormal] = p;
             if(primeroNormal==-1){

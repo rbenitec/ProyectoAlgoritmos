@@ -102,6 +102,7 @@ public class frmListasEnlazas extends javax.swing.JFrame {
         btnEliminarFinal = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -227,6 +228,13 @@ public class frmListasEnlazas extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tabla);
 
+        jButton2.setText("Return");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -252,8 +260,14 @@ public class frmListasEnlazas extends javax.swing.JFrame {
                             .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(139, 139, 139)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(139, 139, 139)
+                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton2)
+                                .addGap(2, 2, 2))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 941, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -291,13 +305,16 @@ public class frmListasEnlazas extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addComponent(cbxCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)))
+                .addGap(17, 17, 17)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(76, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Circulares", jPanel1);
+        jTabbedPane1.addTab("Lista Enlazada", jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -319,20 +336,22 @@ public class frmListasEnlazas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaActionPerformed
+    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
+        pos = tabla.getSelectedRow();
+        txtCodigo.setText(tabla.getValueAt(pos, 0).toString());
+        txtNombre.setText(tabla.getValueAt(pos, 1).toString());
+        txtMarca.setText(tabla.getValueAt(pos, 2).toString());
+        txtPrecio.setText(tabla.getValueAt(pos, 5).toString());
+        cbxCantidad.setSelectedItem(tabla.getValueAt(pos, 4).toString());
+        txtFecha.setText(tabla.getValueAt(pos, 3).toString());
 
-    private void btnInsertarInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarInicioActionPerformed
-        String nombre = txtNombre.getText();
-        String marca = txtMarca.getText();
-        String fecha = txtFecha.getText();
-        int cant = Integer.parseInt(cbxCantidad.getSelectedItem().toString()) ;
-        double precio = Double.parseDouble(txtPrecio.getText());
-        Producto p = new Producto(nombre, marca, precio, cant, fecha);
-        obj.insertarNodoPorInicio(p);muestraTablaNormal();
-        inicio();
-    }//GEN-LAST:event_btnInsertarInicioActionPerformed
+        inicio();btnEliminarFinal.setEnabled(true);btnEliminarInicio.setEnabled(true);btnInsertarInicio.setEnabled(false);btnInsertarFinal.setEnabled(false);
+    }//GEN-LAST:event_tablaMouseClicked
+
+    private void btnEliminarFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarFinalActionPerformed
+        obj.eliminarNodoPorFinal();
+        inicio();muestraTablaNormal();
+    }//GEN-LAST:event_btnEliminarFinalActionPerformed
 
     private void btnInsertarFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarFinalActionPerformed
         String nombre = txtNombre.getText();
@@ -350,26 +369,33 @@ public class frmListasEnlazas extends javax.swing.JFrame {
         inicio();muestraTablaNormal();
     }//GEN-LAST:event_btnEliminarInicioActionPerformed
 
-    private void btnEliminarFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarFinalActionPerformed
-        obj.eliminarNodoPorFinal();
-        inicio();muestraTablaNormal();
-    }//GEN-LAST:event_btnEliminarFinalActionPerformed
-
-    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
-        pos = tabla.getSelectedRow();
-        txtCodigo.setText(tabla.getValueAt(pos, 0).toString());
-        txtNombre.setText(tabla.getValueAt(pos, 1).toString());
-        txtMarca.setText(tabla.getValueAt(pos, 2).toString());
-        txtPrecio.setText(tabla.getValueAt(pos, 5).toString());
-        cbxCantidad.setSelectedItem(tabla.getValueAt(pos, 4).toString());
-        txtFecha.setText(tabla.getValueAt(pos, 3).toString());
-
-        inicio();btnEliminarFinal.setEnabled(true);btnEliminarInicio.setEnabled(true);btnInsertarInicio.setEnabled(false);btnInsertarFinal.setEnabled(false);
-    }//GEN-LAST:event_tablaMouseClicked
-
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         nuevo();
     }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnInsertarInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarInicioActionPerformed
+        String nombre = txtNombre.getText();
+        String marca = txtMarca.getText();
+        String fecha = txtFecha.getText();
+        int cant = Integer.parseInt(cbxCantidad.getSelectedItem().toString()) ;
+        double precio = Double.parseDouble(txtPrecio.getText());
+        Producto p = new Producto(nombre, marca, precio, cant, fecha);
+        obj.insertarNodoPorInicio(p);muestraTablaNormal();
+        inicio();
+    }//GEN-LAST:event_btnInsertarInicioActionPerformed
+
+    private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFechaActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        //creamos variable abrir
+                frmColasPilas ver=new frmColasPilas();
+        //metodo para ver la ventana Conf.Destino
+        ver.setVisible(true);
+        //ocultar ventana actual
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -417,6 +443,7 @@ public class frmListasEnlazas extends javax.swing.JFrame {
     private javax.swing.JButton btnInsertarInicio;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JComboBox<String> cbxCantidad;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;

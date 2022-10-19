@@ -14,6 +14,7 @@ public class ListaPorNombre {
             inicio = nuevo; fin = nuevo;
         }else{  //Que ya hay un nodo en la cola
             //  Evaluar en que pisicion ingresara el nuevo nodo segun su nombre
+            //  si el nombre es menor del primer nodo
             p = inicio;
             while(p.getSgteNodo()!=null){
                 // nuevo es menor que e
@@ -21,7 +22,8 @@ public class ListaPorNombre {
                     nuevo.setSgteNodo(inicio);
                     inicio = nuevo;break;  
                 }else{
-                    p.setSgteNodo(nuevo);
+                    p=inicio;
+                    
                 }
                 
                 p=p.getSgteNodo();
